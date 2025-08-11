@@ -1,7 +1,7 @@
 #!/bin/bash
             ##################################################################
             #               Autorotate Configuration file                    #
-            #              Developed by sergio melas  2021-23                #
+            #              Developed by sergio melas  2021-25                #
             ##################################################################
 
 

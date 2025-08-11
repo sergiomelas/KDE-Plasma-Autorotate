@@ -42,7 +42,7 @@ X11:
 -Latte doc
 
 Wayland:
--Crystal Dock , This is not packaged yet in debian, but you can finf it here: https://github.com/dangvd/crystal-dock/releases
+-Crystal Dock , This is not packaged yet in debian, but you can find it here: https://github.com/dangvd/crystal-dock/releases
 
 
 ##################################################################################################################

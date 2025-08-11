@@ -98,8 +98,8 @@ V2.5  2024-09-22
   -Added mouse get stuck workaround and remove spurious bash processes creation
 V2.6  2025-01-29
   -Make it compatible with Plasma 6
-  -Added support for cairo dock (only doc working properly with plasma 6)
+  -Added support for cairo dock (only doc working properly with plasma 6 on X11)
 V2.7  2025-01-29
   -Corrected bug in plasma 6
 V2.8  2025-08-11
-  -Added support for wayland on plasma 6
+  -Added support for wayland on plasma 6 & Cristal Dock for KDE Plasma Wayland

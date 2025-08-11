@@ -4,18 +4,7 @@
             #              Developed by sergio melas  2021-23                #
             ##################################################################
 
-#########################################################################################
-#SCREEN: Update this according to output form command: xrandr|grep "connected primary"
-#In multimonitor setup choose the screen atthached to the laptop
-# xxxx connected primary ......
-#SCREEN="xxxx"
-SCREEN="eDP"
 
-#########################################################################################
-#DIGITIZERS:Update this according to output form command: xinput list
-TOUCHSCREEN="Wacom HID 524D Finger touch"
-PEN="Wacom HID 524D Pen stylus"
-ERASER="Wacom HID 524D Pen eraser"
 
 
 #########################################################################################
@@ -47,6 +36,25 @@ SNDoff=/usr/share/sounds/freedesktop/stereo/service-logout.oga
 SNDrotate=/usr/share/sounds/freedesktop/stereo/device-added.oga
 
 
+#########################################################################################
+#                           Related only to X11 dont fill if wayland only               #
+#########################################################################################
+
+
+#########################################################################################
+#SCREEN: Update this according to output form command: xrandr|grep "connected primary"
+#In multimonitor setup choose the screen atthached to the laptop
+# xxxx connected primary ......
+#SCREEN="xxxx"
+SCREEN="eDP"
+
+
+
+#########################################################################################
+#DIGITIZERS:Update this according to output form command: xinput list
+TOUCHSCREEN="Wacom HID 524D Finger touch"
+PEN="Wacom HID 524D Pen stylus"
+ERASER="Wacom HID 524D Pen eraser"
 
 
 

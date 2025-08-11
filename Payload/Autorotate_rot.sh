@@ -77,6 +77,7 @@ do
                killall latte-dock
                killall plank
                killall cairo-dock
+               killall crystal-dock
                #Kill on screen keyboard
                killall onboard
 
@@ -92,6 +93,7 @@ do
                xinput set-prop "$TOUCHSCREEN"    "$TRANSFORM" 0 -1 1 1 0 0 0 0 1
                xinput set-prop "$PEN"            "$TRANSFORM" 0 -1 1 1 0 0 0 0 1
                xinput set-prop "$ERASER"         "$TRANSFORM" 0 -1 1 1 0 0 0 0 1
+               kscreen-doctor output.1.rotation.left
 
 
                #Start On screen Keyboard
@@ -132,6 +134,7 @@ do
                killall latte-dock
                killall plank
                killall cairo-dock
+               killall crystal-dock
                #Kill on screen keyboard
                killall onboard
 
@@ -147,6 +150,7 @@ do
                xinput set-prop "$TOUCHSCREEN"    "$TRANSFORM" 0 1 0 -1 0 1 0 0 1
                xinput set-prop "$PEN"            "$TRANSFORM" 0 1 0 -1 0 1 0 0 1
                xinput set-prop "$ERASER"         "$TRANSFORM" 0 1 0 -1 0 1 0 0 1
+               kscreen-doctor output.1.rotation.right
 
                #Start On screen Keyboard
                kstart5 onboard &
@@ -187,6 +191,7 @@ do
                killall latte-dock
                killall plank
                killall cairo-dock
+               killall crystal-dock
                #Kill on screen keyboard
                killall onboard
 
@@ -201,6 +206,7 @@ do
                xinput set-prop "$TOUCHSCREEN"    "$TRANSFORM" -1 0 1 0 -1 1 0 0 1
                xinput set-prop "$PEN"            "$TRANSFORM" -1 0 1 0 -1 1 0 0 1
                xinput set-prop "$ERASER"         "$TRANSFORM" -1 0 1 0 -1 1 0 0 1
+               kscreen-doctor output.1.rotation.inverted
 
                #Start On screen Keyboard
                kstart5 onboard &
@@ -236,6 +242,7 @@ do
                killall latte-dock
                killall plank
                killall cairo-dock
+               killall crystal-dock
                #Kill on screen keyboard
                killall onboard
 
@@ -250,11 +257,17 @@ do
                xinput set-prop "$TOUCHSCREEN"    "$TRANSFORM" 1 0 0 0 1 0 0 0 1
                xinput set-prop "$PEN"            "$TRANSFORM" 1 0 0 0 1 0 0 0 1
                xinput set-prop "$ERASER"         "$TRANSFORM" 1 0 0 0 1 0 0 0 1
+               kscreen-doctor output.1.rotation.normal
 
                #Start dock
-               kstart5 latte-dock --replace &
-               kstart5 plank &
-               kstart5 cairo-dock &
+               if [ $XDG_SESSION_TYPE  != 'x11' ] #if plasma wayland
+               then
+                 kstart5 crystal-dock &
+               else                              #if plasma x11
+                 kstart5 latte-dock --replace &
+                 kstart5 plank &
+                 kstart5 cairo-dock &
+               fi
 
                #Restore keyboard backlight
                if [[ $kbbrit -gt 0 ]]

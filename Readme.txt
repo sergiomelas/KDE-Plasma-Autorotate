@@ -1,15 +1,15 @@
                      ##################################################################
                      ##################################################################
-                     ###                   Autorotate for X11/KDE                   ###
+                     ###                   Autorotate for KDE Plasma                ###
                      ### Developed by sergio melas (sergiomelas@gmail.com) 2021-23  ###
                      ##################################################################
                      ##################################################################
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Inportant: This is intended for the stubborn people that want to stay in KDE
-Plasam on X11, This functionality exists in KDE Plasma on Wayland.
-DO NOT USE IF YOU USE KDE ON WAYLAND
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Inportant: This is intended mainly for the stubborn people that want to stay in KDE
+Plasam on X11, This functionality exists in KDE Plasma on Wayland, however
+this add some features like keybord management for wayland making is still appealing in Wayland
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 Installation Instructions:
   -Install a kernel with the tablet mode (ex: for Lenovos activate CONFIG_LENOVO_YMC)
@@ -33,11 +33,16 @@ Removal Instructions:
 
   -To unistall run remove.sh
 
-Note: this software works only for Kde Plasma with X11 session, it suposses that only one dock is installed,
+Note: this software works only for Kde Plasma, it suposses that only one dock is installed per windows manager
 supported dock:
+
+X11:
 -Plank
 -Cairo Dock
 -Latte doc
+
+Wayland:
+-Crystal Dock , This is not packaged yet in debian, but you can finf it here: https://github.com/dangvd/crystal-dock/releases
 
 
 ##################################################################################################################
@@ -96,3 +101,5 @@ V2.6  2025-01-29
   -Added support for cairo dock (only doc working properly with plasma 6)
 V2.7  2025-01-29
   -Corrected bug in plasma 6
+V2.8  2025-08-11
+  -Added support for wayland on plasma 6

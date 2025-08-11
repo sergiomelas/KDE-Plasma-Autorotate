@@ -18,11 +18,17 @@ if [ $XDG_SESSION_TYPE  != 'x11' ] || ( [ $DESKTOP_SESSION != 'plasma' ] && [ $D
 then
   echo  " "
   echo  " ##################################################################"
-  echo  " #  KDE Autorotate support only systems with KDE Plasma on Xorg   #"
-  echo  " #                     Installation Aborted                       #"
+  echo  " #   KDE Autorotate support  systems with KDE Plasma on Wayland   #"
+  echo  " #                     Installation for Wayland                   #"
   echo  " ##################################################################"
   echo  " "
-  exit 0
+else
+  echo  " "
+  echo  " ##################################################################"
+  echo  " #      KDE Autorotate support  systems with KDE Plasma on Xorg   #"
+  echo  " #                     Installation for X11                       #"
+  echo  " ##################################################################"
+  echo  " "
 fi
 
 

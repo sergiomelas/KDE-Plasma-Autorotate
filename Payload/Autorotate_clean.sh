@@ -37,4 +37,5 @@ rm $TOGGLE
 rm $MTOGGLE
 
 
+GDK_BACKEND=x11 kstart5  cairo-dock
 

@@ -260,14 +260,10 @@ do
                kscreen-doctor output.1.rotation.normal
 
                #Start dock
-               if [ $XDG_SESSION_TYPE  != 'x11' ] #if plasma wayland
-               then
-                 kstart5 crystal-dock &
-               else                              #if plasma x11
-                 kstart5 latte-dock --replace &
-                 kstart5 plank &
-                 kstart5 cairo-dock &
-               fi
+               kstart5 crystal-dock &
+               kstart5 latte-dock --replace &
+               kstart5 plank &
+               GDK_BACKEND=x11 kstart5  cairo-dock &
 
                #Restore keyboard backlight
                if [[ $kbbrit -gt 0 ]]

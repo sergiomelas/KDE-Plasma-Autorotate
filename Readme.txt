@@ -102,4 +102,4 @@ V2.6  2025-01-29
 V2.7  2025-01-29
   -Corrected bug in plasma 6
 V2.8  2025-08-11
-  -Added support for wayland on plasma 6 & Cristal Dock for KDE Plasma Wayland
+  -Added support for wayland on plasma 6 & Cristal Dock for KDE Plasma Wayland, allow plank to work in wayland

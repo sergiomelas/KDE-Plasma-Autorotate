@@ -27,6 +27,7 @@ MDOWN=$HOME/.autorotate/.mdown            #Toggle last rotation down
 #Read COnfiguration
 SNDrotate=$( cat /usr/Autorotate/SNDrotate.conf )
 SCREEN=$( cat /usr/Autorotate/SCREEN.conf )
+SCREENW=$( cat /usr/Autorotate/SCREENW.conf )
 TOUCHSCREEN=$( cat /usr/Autorotate/TOUCHSCREEN.conf )
 PEN=$( cat /usr/Autorotate/PEN.conf )
 ERASER=$( cat /usr/Autorotate/ERASER.conf )
@@ -93,7 +94,7 @@ do
                xinput set-prop "$TOUCHSCREEN"    "$TRANSFORM" 0 -1 1 1 0 0 0 0 1
                xinput set-prop "$PEN"            "$TRANSFORM" 0 -1 1 1 0 0 0 0 1
                xinput set-prop "$ERASER"         "$TRANSFORM" 0 -1 1 1 0 0 0 0 1
-               kscreen-doctor output.1.rotation.left
+               kscreen-doctor output.$SCREENW.rotation.left
 
 
                #Start On screen Keyboard
@@ -150,7 +151,7 @@ do
                xinput set-prop "$TOUCHSCREEN"    "$TRANSFORM" 0 1 0 -1 0 1 0 0 1
                xinput set-prop "$PEN"            "$TRANSFORM" 0 1 0 -1 0 1 0 0 1
                xinput set-prop "$ERASER"         "$TRANSFORM" 0 1 0 -1 0 1 0 0 1
-               kscreen-doctor output.1.rotation.right
+               kscreen-doctor output.$SCREENW.rotation.right
 
                #Start On screen Keyboard
                kstart5 onboard &
@@ -206,7 +207,7 @@ do
                xinput set-prop "$TOUCHSCREEN"    "$TRANSFORM" -1 0 1 0 -1 1 0 0 1
                xinput set-prop "$PEN"            "$TRANSFORM" -1 0 1 0 -1 1 0 0 1
                xinput set-prop "$ERASER"         "$TRANSFORM" -1 0 1 0 -1 1 0 0 1
-               kscreen-doctor output.1.rotation.inverted
+               kscreen-doctor output.$SCREENW.rotation.inverted
 
                #Start On screen Keyboard
                kstart5 onboard &
@@ -257,7 +258,7 @@ do
                xinput set-prop "$TOUCHSCREEN"    "$TRANSFORM" 1 0 0 0 1 0 0 0 1
                xinput set-prop "$PEN"            "$TRANSFORM" 1 0 0 0 1 0 0 0 1
                xinput set-prop "$ERASER"         "$TRANSFORM" 1 0 0 0 1 0 0 0 1
-               kscreen-doctor output.1.rotation.normal
+               kscreen-doctor output.$SCREENW.rotation.normal
 
                #Start dock
                kstart5 crystal-dock &

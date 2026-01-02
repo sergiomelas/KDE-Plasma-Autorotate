@@ -44,9 +44,24 @@ SNDrotate=/usr/share/sounds/freedesktop/stereo/device-added.oga
 #########################################################################################
 #SCREEN: Update this according to output form command: xrandr|grep "connected primary"
 #In multimonitor setup choose the screen atthached to the laptop
+#Need to be executed in a X11 Session
 # xxxx connected primary ......
 #SCREEN="xxxx"
 SCREEN="eDP"
+
+#########################################################################################
+#                           Related only to Wayland dont fill if x11 only               #
+#########################################################################################
+
+
+#########################################################################################
+#SCREEN: Update this according to output form command: kscreen-doctor -o
+#Need to be executed in a Wayland Session
+#Output: y xxxx
+#SCREENW="xxxx"
+SCREENW="eDP-1"
+
+
 
 
 
@@ -79,6 +94,7 @@ echo $SNDon       | sudo tee -a /usr/Autorotate/SNDon.conf       > /dev/null
 echo $SNDoff      | sudo tee -a /usr/Autorotate/SNDoff.conf      > /dev/null
 echo $SNDrotate   | sudo tee -a /usr/Autorotate/SNDrotate.conf   > /dev/null
 echo $SCREEN      | sudo tee -a /usr/Autorotate/SCREEN.conf      > /dev/null
+echo $SCREENW     | sudo tee -a /usr/Autorotate/SCREENW.conf      > /dev/null
 echo $TOUCHSCREEN | sudo tee -a /usr/Autorotate/TOUCHSCREEN.conf > /dev/null
 echo $PEN         | sudo tee -a /usr/Autorotate/PEN.conf         > /dev/null
 echo $ERASER      | sudo tee -a /usr/Autorotate/ERASER.conf      > /dev/null

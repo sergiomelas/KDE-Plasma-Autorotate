@@ -1,0 +1,5 @@
+The command
+kscreen-doctor output.1.rotation.right
+kscreen-doctor output.1.rotation.left
+kscreen-doctor output.1.rotation.normal
+kscreen-doctor output.1.rotation.inverted

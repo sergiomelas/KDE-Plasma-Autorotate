@@ -1,4 +1,5 @@
 #!/bin/bash
+#Autorotate_pos.sh
 
 ##################################################################
 #          Autorotate_pos.sh   Calculate position of the pc      #

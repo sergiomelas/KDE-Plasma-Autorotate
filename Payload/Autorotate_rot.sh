@@ -1,4 +1,5 @@
 #!/bin/bash
+#Autorotate_rot.sh
 
 ##################################################################
 #          Autorotate_rot.sh   Rotate acreen                     #
@@ -89,13 +90,34 @@ do
                xinput --map-to-output "$ERASER" "$SCREEN"
 
 
-               #rotate display, touchscreen, pen and eraser
-               xrandr --output $SCREEN  --rotate left &
-               xinput set-prop "$TOUCHSCREEN"    "$TRANSFORM" 0 -1 1 1 0 0 0 0 1
-               xinput set-prop "$PEN"            "$TRANSFORM" 0 -1 1 1 0 0 0 0 1
-               xinput set-prop "$ERASER"         "$TRANSFORM" 0 -1 1 1 0 0 0 0 1
-               kscreen-doctor output.$SCREENW.rotation.left
+               # Rotate display, touchscreen, pen and eraser
+               if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+                   # 1. Apply physical rotation and input matrix
+                   xrandr --output $SCREEN  --rotate left &
+                   xinput set-prop "$TOUCHSCREEN"    "$TRANSFORM" 0 -1 1 1 0 0 0 0 1
+                   xinput set-prop "$PEN"            "$TRANSFORM" 0 -1 1 1 0 0 0 0 1
+                   xinput set-prop "$ERASER"         "$TRANSFORM" 0 -1 1 1 0 0 0 0 1
 
+                   # 2. Force icon grid sync (The Panning Jiggle)
+                   # Portrait Fix (Left/Right)
+                   sleep 0.5
+                   # 1. Clear any stuck panning/fb settings first to 'reset' the canvas
+                   xrandr --output "$SCREEN" --panning 0x0
+
+                   # 2. Re-detect the clean portrait resolution (e.g., 1080x1920)
+                   RES=$(xrandr | grep "$SCREEN" | grep -oP '\d+x\d+' | head -1)
+                   WIDTH=$(echo $RES | cut -d'x' -f1)
+                   HEIGHT=$(echo $RES | cut -d'x' -f2)
+
+                   # 3. Force the Framebuffer AND the Nudge in one shot
+                   # This tells X11: 'The canvas is now TALL, not WIDE'
+                   xrandr --fb "${WIDTH}x${HEIGHT}" --output "$SCREEN" --panning "${RES}+1+1"
+                   xrandr --output "$SCREEN" --panning "${RES}+0+0"
+
+               else
+                   # Wayland: Let KDE handle everything
+                   kscreen-doctor output.$SCREENW.rotation.left
+               fi
 
                #Start On screen Keyboard
                kstart5 onboard &
@@ -145,13 +167,34 @@ do
                xinput --map-to-output "$PEN" "$SCREEN"
                xinput --map-to-output "$ERASER" "$SCREEN"
 
+               # Rotate display, touchscreen, pen and eraser
+               if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+                   # 1. Apply physical rotation and input matrix
+                   xrandr --output "$SCREEN" --rotate right
+                   xinput set-prop "$TOUCHSCREEN" "$TRANSFORM" 0 1 0 -1 0 1 0 0 1
+                   xinput set-prop "$PEN"         "$TRANSFORM" 0 1 0 -1 0 1 0 0 1
+                   xinput set-prop "$ERASER"      "$TRANSFORM" 0 1 0 -1 0 1 0 0 1
 
-               #rotate display, touchscreen, pen and eraser
-               xrandr --output $SCREEN --rotate right &
-               xinput set-prop "$TOUCHSCREEN"    "$TRANSFORM" 0 1 0 -1 0 1 0 0 1
-               xinput set-prop "$PEN"            "$TRANSFORM" 0 1 0 -1 0 1 0 0 1
-               xinput set-prop "$ERASER"         "$TRANSFORM" 0 1 0 -1 0 1 0 0 1
-               kscreen-doctor output.$SCREENW.rotation.right
+                   # 2. Force icon grid sync (The Panning Jiggle)
+                   # Portrait Fix (Left/Right)
+                   sleep 0.5
+                   # 1. Clear any stuck panning/fb settings first to 'reset' the canvas
+                   xrandr --output "$SCREEN" --panning 0x0
+
+                   # 2. Re-detect the clean portrait resolution (e.g., 1080x1920)
+                   RES=$(xrandr | grep "$SCREEN" | grep -oP '\d+x\d+' | head -1)
+                   WIDTH=$(echo $RES | cut -d'x' -f1)
+                   HEIGHT=$(echo $RES | cut -d'x' -f2)
+
+                   # 3. Force the Framebuffer AND the Nudge in one shot
+                   # This tells X11: 'The canvas is now TALL, not WIDE'
+                   xrandr --fb "${WIDTH}x${HEIGHT}" --output "$SCREEN" --panning "${RES}+1+1"
+                   xrandr --output "$SCREEN" --panning "${RES}+0+0"
+               else
+                   # Wayland: Let KDE handle everything
+                   kscreen-doctor output."$SCREENW".rotation.right
+               fi
+
 
                #Start On screen Keyboard
                kstart5 onboard &
@@ -202,12 +245,25 @@ do
                xinput --map-to-output "$PEN" "$SCREEN"
                xinput --map-to-output "$ERASER" "$SCREEN"
 
-               #rotate display, touchscreen, pen and eraser
-               xrandr --output $SCREEN --rotate inverted &
-               xinput set-prop "$TOUCHSCREEN"    "$TRANSFORM" -1 0 1 0 -1 1 0 0 1
-               xinput set-prop "$PEN"            "$TRANSFORM" -1 0 1 0 -1 1 0 0 1
-               xinput set-prop "$ERASER"         "$TRANSFORM" -1 0 1 0 -1 1 0 0 1
-               kscreen-doctor output.$SCREENW.rotation.inverted
+               # Rotate display, touchscreen, pen and eraser
+               if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+                   # 1. Apply physical rotation and input matrix
+                   xrandr --output $SCREEN --rotate inverted &
+                   xinput set-prop "$TOUCHSCREEN"    "$TRANSFORM" -1 0 1 0 -1 1 0 0 1
+                   xinput set-prop "$PEN"            "$TRANSFORM" -1 0 1 0 -1 1 0 0 1
+                   xinput set-prop "$ERASER"         "$TRANSFORM" -1 0 1 0 -1 1 0 0 1
+
+                   # 2. Force icon grid sync (The Panning Jiggle)
+                   # Wait briefly for the rotation to settle
+                   sleep 0.5
+                   # Detect the resolution currently active for your screen
+                   RES=$(xrandr | grep "$SCREEN" | grep -oP '\d+x\d+')
+                   # Force the 1-pixel panning nudge to lock icons
+                   xrandr --output "$SCREEN" --panning "${RES}+1+1" && xrandr --output "$SCREEN" --panning "${RES}+0+0"
+               else
+                   # Wayland: Let KDE handle everything
+                    kscreen-doctor output.$SCREENW.rotation.inverted
+               fi
 
                #Start On screen Keyboard
                kstart5 onboard &
@@ -253,12 +309,25 @@ do
                xinput --map-to-output "$PEN" "$SCREEN"
                xinput --map-to-output "$ERASER" "$SCREEN"
 
-               #Rotate Screen and Touch and pen to Normal
-               xrandr --output $SCREEN --rotate normal &
-               xinput set-prop "$TOUCHSCREEN"    "$TRANSFORM" 1 0 0 0 1 0 0 0 1
-               xinput set-prop "$PEN"            "$TRANSFORM" 1 0 0 0 1 0 0 0 1
-               xinput set-prop "$ERASER"         "$TRANSFORM" 1 0 0 0 1 0 0 0 1
-               kscreen-doctor output.$SCREENW.rotation.normal
+               # Rotate display, touchscreen, pen and eraser
+               if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+                   # 1. Apply physical rotation and input matrix
+                   xrandr --output $SCREEN --rotate normal &
+                   xinput set-prop "$TOUCHSCREEN"    "$TRANSFORM" 1 0 0 0 1 0 0 0 1
+                   xinput set-prop "$PEN"            "$TRANSFORM" 1 0 0 0 1 0 0 0 1
+                   xinput set-prop "$ERASER"         "$TRANSFORM" 1 0 0 0 1 0 0 0 1
+
+                   # 2. Force icon grid sync (The Panning Jiggle)
+                   # Wait briefly for the rotation to settle
+                   sleep 0.5
+                   # Detect the resolution currently active for your screen
+                   RES=$(xrandr | grep "$SCREEN" | grep -oP '\d+x\d+')
+                   # Force the 1-pixel panning nudge to lock icons
+                   xrandr --output "$SCREEN" --panning "${RES}+1+1" && xrandr --output "$SCREEN" --panning "${RES}+0+0"
+               else
+                   # Wayland: Let KDE handle everything
+                   kscreen-doctor output.$SCREENW.rotation.normal
+               fi
 
                #Start dock
                kstart5 crystal-dock &

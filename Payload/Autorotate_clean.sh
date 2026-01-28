@@ -1,4 +1,5 @@
 #!/bin/bash
+#Autorotate_clean.sh
 
 ##################################################################
 #         Autorotate_clean.sh   clean up on exit                 #

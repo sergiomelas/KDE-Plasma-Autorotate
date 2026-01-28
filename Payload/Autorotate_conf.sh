@@ -1,4 +1,6 @@
 #!/bin/bash
+#Autorotate_conf.sh
+
             ##################################################################
             #               Autorotate Configuration file                    #
             #              Developed by sergio melas  2021-25                #

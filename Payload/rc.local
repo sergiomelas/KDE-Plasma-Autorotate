@@ -1,4 +1,5 @@
 #!/bin/bash
+#rc.local
 
 ##################################################################
 #        rc.local Change permissions to some system objects      #

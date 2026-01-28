@@ -1,4 +1,5 @@
 #!/bin/bash
+#Autorotate_toggle.sh
 
 ##################################################################
 #         Autorotate_toggle.sh   toggle on/off the rotation      #

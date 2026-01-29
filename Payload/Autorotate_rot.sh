@@ -312,28 +312,45 @@ do
                # Rotate display, touchscreen, pen and eraser
                if [ "$XDG_SESSION_TYPE" = "x11" ]; then
                    # 1. Apply physical rotation and input matrix
-                   xrandr --output $SCREEN --rotate normal &
+                   xrandr --output "$SCREEN" --rotate normal &
                    xinput set-prop "$TOUCHSCREEN"    "$TRANSFORM" 1 0 0 0 1 0 0 0 1
                    xinput set-prop "$PEN"            "$TRANSFORM" 1 0 0 0 1 0 0 0 1
                    xinput set-prop "$ERASER"         "$TRANSFORM" 1 0 0 0 1 0 0 0 1
 
                    # 2. Force icon grid sync (The Panning Jiggle)
-                   # Wait briefly for the rotation to settle
                    sleep 0.5
-                   # Detect the resolution currently active for your screen
-                   RES=$(xrandr | grep "$SCREEN" | grep -oP '\d+x\d+')
-                   # Force the 1-pixel panning nudge to lock icons
+                   RES=$(xrandr | grep "$SCREEN" | grep -oP '\d+x\d+' | head -1)
                    xrandr --output "$SCREEN" --panning "${RES}+1+1" && xrandr --output "$SCREEN" --panning "${RES}+0+0"
+
+                   # Standard X11 startup
+                   # Using kstart5 to ensure they are managed by the window manager
+                   kstart5 crystal-dock &
+                   kstart5 latte-dock &
+                   kstart5 plank &
+                   kstart5 cairo-dock &
                else
-                   # Wayland: Let KDE handle everything
-                   kscreen-doctor output.$SCREENW.rotation.normal
+                   # Wayland: Rotate via kscreen-doctor (KDE native)
+                   kscreen-doctor output."$SCREENW".rotation.normal
+
+                   # 3. CRITICAL WAYLAND FIX: Wait for the compositor to update geometry
+                   # Wayland surfaces take longer to re-map than X11 windows
+                   sleep 2
+
+                   # Native Wayland docks (No extra flags needed)
+                   # Note: Crystal-dock is Wayland-aware
+                   kstart5 crystal-dock &
+
+                   # Latte-dock needs --replace to re-anchor the layer-shell surface
+                   kstart5 latte-dock --replace &
+
+                   # Legacy X11 docks (Plank & Cairo)
+                   # env GDK_BACKEND=x11 forces them to use the XWayland bridge
+                   # as they cannot natively 'see' Wayland screen edges.
+                   env GDK_BACKEND=x11 kstart5 cairo-dock &
+                   # Plank skips the 10-second 'org.ayatana.bamf' timeout.
+                   env XDG_SESSION_TYPE=x11 GDK_BACKEND=x11 GTK_MODULES="" NO_AT_BRIDGE=1 DBUS_SESSION_BUS_ADDRESS="" plank &
                fi
 
-               #Start dock
-               kstart5 crystal-dock &
-               kstart5 latte-dock --replace &
-               kstart5 plank &
-               GDK_BACKEND=x11 kstart5  cairo-dock &
 
                #Restore keyboard backlight
                if [[ $kbbrit -gt 0 ]]

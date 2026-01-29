@@ -42,8 +42,6 @@ SNDrotate=/usr/share/sounds/freedesktop/stereo/device-added.oga
 #                           Related only to X11 dont fill if wayland only               #
 #########################################################################################
 
-
-#########################################################################################
 #SCREEN: Update this according to output form command: xrandr|grep "connected primary"
 #In multimonitor setup choose the screen atthached to the laptop
 #Need to be executed in a X11 Session
@@ -56,22 +54,22 @@ SCREEN="eDP"
 #########################################################################################
 
 
-#########################################################################################
 #SCREEN: Update this according to output form command: kscreen-doctor -o
 #Need to be executed in a Wayland Session
 #Output: y xxxx
 #SCREENW="xxxx"
 SCREENW="eDP-1"
 
-
-
-
-
-#########################################################################################
 #DIGITIZERS:Update this according to output form command: xinput list
 TOUCHSCREEN="Wacom HID 524D Finger touch"
 PEN="Wacom HID 524D Pen stylus"
 ERASER="Wacom HID 524D Pen eraser"
+
+
+
+
+
+
 
 
 

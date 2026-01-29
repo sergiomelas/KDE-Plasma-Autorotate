@@ -6,9 +6,7 @@
 #              Developed by sergio melas 2021-23                 #
 ##################################################################
 
-
-
-
+#Initialize Global Variables
 TOGGLE=$HOME/.autorotate/.toggle              #Toggle rotation on off
 MTOGGLE=$HOME/.autorotate/.mtoggle            #One shot toggle
 
@@ -24,8 +22,6 @@ SCREEN=$( cat /usr/Autorotate/SCREEN.conf )
 TOUCHSCREEN=$( cat /usr/Autorotate/TOUCHSCREEN.conf )
 PEN=$( cat /usr/Autorotate/PEN.conf )
 ERASER=$( cat /usr/Autorotate/ERASER.conf )
-
-
 
 if [ -e $MTOGGLE ];
     then
@@ -44,7 +40,6 @@ if [ ! -e $TOGGLE ]; then
     kstart5 setsid '/usr/bin/Autorotate_pos.sh'  &
     kstart5 setsid '/usr/bin/Autorotate_rot.sh'  &
 
-
     paplay $SNDon &
 
     #Wait for bash are started
@@ -53,30 +48,34 @@ if [ ! -e $TOGGLE ]; then
         sleep 0.1
       done
 
-    #change icon and refresh desktop klicking
-    if [ -e $MDOWN ];
-       then
-         cp /usr/share/icons/'rstart hor'.png /usr/share/icons/rstate.png
+    #change icon based on last rotation state
+    if [ -e $MDOWN ]; then
+        cp /usr/share/icons/'rstart hor'.png /usr/share/icons/rstate.png
     fi
-    if [ -e $MUP ];
-       then
-         cp /usr/share/icons/'rstart hor'.png /usr/share/icons/rstate.png
-      fi
-    if [ -e $MLEFT ];
-       then
-         cp /usr/share/icons/'rstart ver'.png /usr/share/icons/rstate.png
-     fi
-    if [ -e $MRIGHT ];
-       then
-         cp /usr/share/icons/'rstart ver'.png /usr/share/icons/rstate.png
+    if [ -e $MUP ]; then
+        cp /usr/share/icons/'rstart hor'.png /usr/share/icons/rstate.png
+    fi
+    if [ -e $MLEFT ]; then
+        cp /usr/share/icons/'rstart ver'.png /usr/share/icons/rstate.png
+    fi
+    if [ -e $MRIGHT ]; then
+        cp /usr/share/icons/'rstart ver'.png /usr/share/icons/rstate.png
     fi
 
-    eval $(xdotool getmouselocation --shell)
-    xdotool mousemove 2 100
-    xdotool click 1
-    xdotool click 1
-    xdotool mousemove $X $Y
-    xrefresh
+    # >>> X11/Wayland ICON REFRESH LOGIC <<<
+    if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+        # X11 Method: Simulate clicks and force refresh
+        eval $(xdotool getmouselocation --shell)
+        xdotool mousemove 2 100
+        xdotool click 1
+        xdotool click 1
+        xdotool mousemove $X $Y
+        xrefresh
+    else
+        # Wayland (KDE) Method: Send a D-Bus signal to refresh the UI cache
+        dbus-send --session --type=signal /KGlobalSettings org.kde.KGlobalSettings.notifyChange int32:2 int32:0
+    fi
+
     notify-send -t 2000 -e 'Autorotate Enabled ' -i /usr/share/icons/rstate.png -a 'KDE Autorotate' -u low &
     rm $MTOGGLE
 
@@ -85,30 +84,33 @@ fi
 
 if [ -e $TOGGLE ]; then
 
-    #change icon and refresh desktop klicking
-    if [ -e $MDOWN ];
-       then
-         cp /usr/share/icons/'rstop hor'.png /usr/share/icons/rstate.png
+    #change icon based on last rotation state (for 'stop' icons)
+    if [ -e $MDOWN ]; then
+        cp /usr/share/icons/'rstop hor'.png /usr/share/icons/rstate.png
     fi
-    if [ -e $MUP ];
-       then
-         cp /usr/share/icons/'rstop hor'.png /usr/share/icons/rstate.png
+    if [ -e $MUP ]; then
+        cp /usr/share/icons/'rstop hor'.png /usr/share/icons/rstate.png
     fi
-    if [ -e $MLEFT ];
-       then
-         cp /usr/share/icons/'rstop ver'.png /usr/share/icons/rstate.png
+    if [ -e $MLEFT ]; then
+        cp /usr/share/icons/'rstop ver'.png /usr/share/icons/rstate.png
     fi
-    if [ -e $MRIGHT ];
-       then
-         cp /usr/share/icons/'rstop ver'.png /usr/share/icons/rstate.png
+    if [ -e $MRIGHT ]; then
+        cp /usr/share/icons/'rstop ver'.png /usr/share/icons/rstate.png
     fi
 
-    eval $(xdotool getmouselocation --shell)
-    xdotool mousemove 2 100
-    xdotool click 1
-    xdotool click 1
-    xdotool mousemove $X $Y
-    xrefresh
+    # >>> X11/Wayland ICON REFRESH LOGIC <<<
+    if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+        # X11 Method: Simulate clicks and force refresh
+        eval $(xdotool getmouselocation --shell)
+        xdotool mousemove 2 100
+        xdotool click 1
+        xdotool click 1
+        xdotool mousemove $X $Y
+        xrefresh
+    else
+        # Wayland (KDE) Method: Send a D-Bus signal to refresh the UI cache
+        dbus-send --session --type=signal /KGlobalSettings org.kde.KGlobalSettings.notifyChange int32:2 int32:0
+    fi
 
     notify-send -t 2000 -e 'Autorotate Disabled' -i /usr/share/icons/rstate.png -a 'KDE Autorotate' -u low &
     paplay $SNDoff &
@@ -123,5 +125,3 @@ if [ -e $TOGGLE ]; then
 
     exit 0
 fi
-
-

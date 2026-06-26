@@ -101,6 +101,7 @@ do
                    # 2. Force icon grid sync (The Panning Jiggle)
                    # Portrait Fix (Left/Right)
                    sleep 0.5
+
                    # 1. Clear any stuck panning/fb settings first to 'reset' the canvas
                    xrandr --output "$SCREEN" --panning 0x0
 
@@ -175,11 +176,12 @@ do
                    xinput set-prop "$PEN"         "$TRANSFORM" 0 1 0 -1 0 1 0 0 1
                    xinput set-prop "$ERASER"      "$TRANSFORM" 0 1 0 -1 0 1 0 0 1
 
+                   # 1. Clear any stuck panning/fb settings first to 'reset' the canvas
+                   xrandr --output "$SCREEN" --panning 0x0
+
                    # 2. Force icon grid sync (The Panning Jiggle)
                    # Portrait Fix (Left/Right)
                    sleep 0.5
-                   # 1. Clear any stuck panning/fb settings first to 'reset' the canvas
-                   xrandr --output "$SCREEN" --panning 0x0
 
                    # 2. Re-detect the clean portrait resolution (e.g., 1080x1920)
                    RES=$(xrandr | grep "$SCREEN" | grep -oP '\d+x\d+' | head -1)
@@ -253,13 +255,18 @@ do
                    xinput set-prop "$PEN"            "$TRANSFORM" -1 0 1 0 -1 1 0 0 1
                    xinput set-prop "$ERASER"         "$TRANSFORM" -1 0 1 0 -1 1 0 0 1
 
+                   # 1. Clear any stuck panning/fb settings first to 'reset' the canvas
+                   xrandr --output "$SCREEN" --panning 0x0
+
                    # 2. Force icon grid sync (The Panning Jiggle)
                    # Wait briefly for the rotation to settle
+
                    sleep 0.5
                    # Detect the resolution currently active for your screen
                    RES=$(xrandr | grep "$SCREEN" | grep -oP '\d+x\d+')
                    # Force the 1-pixel panning nudge to lock icons
-                   xrandr --output "$SCREEN" --panning "${RES}+1+1" && xrandr --output "$SCREEN" --panning "${RES}+0+0"
+                   xrandr --output "$SCREEN" --panning "${RES}+1+1"
+                   xrandr --output "$SCREEN" --panning "${RES}+0+0"
                else
                    # Wayland: Let KDE handle everything
                     kscreen-doctor output.$SCREENW.rotation.inverted
@@ -317,10 +324,14 @@ do
                    xinput set-prop "$PEN"            "$TRANSFORM" 1 0 0 0 1 0 0 0 1
                    xinput set-prop "$ERASER"         "$TRANSFORM" 1 0 0 0 1 0 0 0 1
 
+                   # 1. Clear any stuck panning/fb settings first to 'reset' the canvas
+                   xrandr --output "$SCREEN" --panning 0x0
+
                    # 2. Force icon grid sync (The Panning Jiggle)
                    sleep 0.5
                    RES=$(xrandr | grep "$SCREEN" | grep -oP '\d+x\d+' | head -1)
-                   xrandr --output "$SCREEN" --panning "${RES}+1+1" && xrandr --output "$SCREEN" --panning "${RES}+0+0"
+                   xrandr --output "$SCREEN" --panning "${RES}+1+1"
+                   xrandr --output "$SCREEN" --panning "${RES}+0+0"
 
                    # Standard X11 startup
                    # Using kstart5 to ensure they are managed by the window manager

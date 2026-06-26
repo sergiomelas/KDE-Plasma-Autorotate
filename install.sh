@@ -1,5 +1,5 @@
 #!/bin/bash
-#This script will install autorotate system for KDE
+#This script will install autorotate system for  KDE
 
 echo  " "
 echo  " ##################################################################"

@@ -1,9 +1,0 @@
-[Desktop Entry]
-Categories=Settings;HardwareSettings;Utility;
-Comment=Change the status icon theme for KDE Autorotate
-Exec=/usr/bin/Autorotate_theme.sh
-Icon=/usr/share/icons/rstate.png
-Name=Autorotate Theme Selector
-StartupNotify=true
-Terminal=false
-Type=Application

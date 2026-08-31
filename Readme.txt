@@ -1,4 +1,4 @@
-##################################################################
+                     ##################################################################
                      ##################################################################
                      ###                   Autorotate for KDE Plasma                ###
                      ### Developed by sergio melas (sergiomelas@gmail.com) 2021-26  ###
@@ -52,9 +52,10 @@ Wayland:
 ##################################################################################################################
 Change log:
 
-V3.1  2026-08-31  - Added robust UDEV rules for persistent keyboard LED brightness permissions, restored system-wide
+2026-08-31  - Added robust UDEV rules for persistent keyboard LED brightness permissions, restored system-wide
                     autostart for the clean script, and automated universal user desktop shortcut provisioning with full
                     permissions, debugging tools, and autoconf utilities.
+                    Added Debian patkager
 V3.0  2026-02-06  - Corrected bugs of icon misplacement in X11
 V2.9  2025-12-29  - Corrected bugs of the support for wayland on plasma 6, improved support for plank
 V2.8  2025-12-25  - Added support for wayland on plasma 6 & Cristal Dock for KDE Plasma Wayland, allow plank to work in wayland.

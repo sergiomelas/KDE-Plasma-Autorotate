@@ -52,7 +52,7 @@ Wayland:
 ##################################################################################################################
 Change log:
 
-2026-08-31  - Added robust UDEV rules for persistent keyboard LED brightness permissions, restored system-wide
+V3.1  2026-08-31  - Added robust UDEV rules for persistent keyboard LED brightness permissions, restored system-wide
                     autostart for the clean script, and automated universal user desktop shortcut provisioning with full
                     permissions, debugging tools, and autoconf utilities.
                     Added Debian patkager
